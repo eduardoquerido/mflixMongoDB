@@ -1,0 +1,79 @@
+db.pets.insert([{"_id": 1, "pet": "cat"},
+{"_id": 1, "pet": "dog"},
+{"_id": 3, "pet": "fish"},
+{"_id": 4, "pet": "snake"}
+], {"ordered": false})
+
+
+db.pets.insert([{"pet": "cat"}, {"pet": "dog"},
+{"pet": "fish"}
+])
+
+
+db.pets2.insert([{"_id": 1, "pet": "cat"},
+{"_id": 2, "pet": "dog"},
+{"_id": 3, "pet": "fish"},
+{"_id": 3, "pet": "snake"}
+])
+
+
+=====================================================
+db.pets.insertOne({
+ "_id": ObjectId("5ec414e5e722bb1f65a25451"),
+ "pet": "wolf",
+ "domestic?": false,
+ "diet": "carnivorous",
+ "climate": ["polar", "equatorial", "continental", "mountain"]
+})
+
+
+========================================================
+
+
+db.companies.find({"$or": [{"$and": [{"founded_year": 2004}, {"$or": [{"category_code": "social"},{"category_code": "web"}]}]}, {"$and": [{"founded_month": 10}, {"$or": [{"category_code": "social"}, {"category_code": "web"}] }] } ]}).count()
+
+
+==========================================================
+
+db.trips.find({"$expr": {"$and": [{"$gt": ["$tripduration", 1200]}, {"$eq": ["$start station id", "$end station id"]} ]}}).count()
+
+
+=============================================================
+
+db.listingsAndReviews.find({ "reviews": { "$size":50 }, "accommodates": { "$gt":6 }})
+
+
+========================================================================================================
+
+db.grades.find({ "class_id": 431 }, { "scores": { "$elemMatch": { "score": { "$gt": 85 } } } }).pretty()
+
+db.companies.find({ "offices": { "$elemMatch": { "city": "Seattle" } } }).count()
+
+
+db.companies.find({ "funding_rounds": { "$size": 8 } }, { "name": 1, "_id": 0 })
+
+
+=========================================================================================================
+
+db.trips.find({ "start station location.coordinates": { "$lt": -74 }}).count()
+
+
+==========================================================================================================
+
+db.listingsAndReviews.aggregate([
+                                  { "$project": { "address": 1, "_id": 0 }},
+                                  { "$group": { "_id": "$address.country",
+                                                "count": { "$sum": 1 } } }
+                                ])
+
+===========================================================================================================
+
+db.zips.find().sort({ "pop": 1 }).limit(1)
+
+db.zips.find().sort({ "pop": 1, "city": -1 })
+
+========================================================================================================
+
+db.companies.find({ "founded_year": { "$ne": null }},{ "name": 1, "founded_year": 1 }).sort({ "founded_year": 1 }).limit(5)
+
+========================================================================================================

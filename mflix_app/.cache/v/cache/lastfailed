@@ -1,0 +1,3 @@
+{
+  "tests/test_paging.py::test_supports_paging_by_text": true
+}
